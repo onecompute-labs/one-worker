@@ -21,5 +21,5 @@ Initial release.
 - `one-worker` CLI with startup banner and library exports.
 - 56 unit tests (gateway and backend fully mocked; receipts re-verified against the on-wire public key).
 
-[Unreleased]: https://github.com/onecomputexyz/one-worker/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/onecomputexyz/one-worker/releases/tag/v0.1.0
+[Unreleased]: https://github.com/onecompute-labs/one-worker/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/onecompute-labs/one-worker/releases/tag/v0.1.0
