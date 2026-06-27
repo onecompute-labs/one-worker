@@ -2,10 +2,7 @@
 
 **Earn USDT from your idle GPU.**
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![node](https://img.shields.io/badge/node-%3E%3D20-339933.svg)](https://nodejs.org)
-[![type](https://img.shields.io/badge/types-included-3178c6.svg)](#programmatic-use)
-[![runtime deps](https://img.shields.io/badge/runtime%20deps-0-success.svg)](#architecture)
+License: MIT · Node.js >= 20 · TypeScript types included · zero runtime dependencies
 
 GPU worker client for **[ONE](https://onecomputeai.xyz)**, the decentralized AI compute network.
 Point it at any local OpenAI-compatible inference server (Ollama, llama.cpp, vLLM, LM Studio)
@@ -51,10 +48,10 @@ USDT. There is no $ONE token in the loop on the worker side — the token gates 
 
 - **Node.js >= 20** (uses global `fetch`, `node:crypto`, `node:timers/promises`).
 - **A local OpenAI-compatible inference backend.** Any of these work out of the box:
-  - [Ollama](https://ollama.com) — `http://localhost:11434/v1` (default)
+  - Ollama — `http://localhost:11434/v1` (default)
   - llama.cpp server — `http://localhost:8080/v1`
   - vLLM — `http://localhost:8000/v1`
-  - [LM Studio](https://lmstudio.ai) — `http://localhost:1234/v1`
+  - LM Studio — `http://localhost:1234/v1`
 - An ed25519 key (the worker generates an ephemeral one if you don't supply one, but ephemeral
   keys do not accrue settlement).
 
@@ -80,7 +77,7 @@ one-worker
 Or from a clone:
 
 ```bash
-git clone https://github.com/onecompute-labs/one-worker
+gh repo clone onecompute-labs/one-worker
 cd one-worker
 npm install
 npm run build
@@ -215,8 +212,7 @@ injected mock `fetch` — they never touch the network or a real backend.
 
 ## Contributing
 
-Issues and pull requests welcome at
-[github.com/onecompute-labs/one-worker](https://github.com/onecompute-labs/one-worker). Please keep the
+Issues and pull requests are welcome in this repository. Please keep the
 zero-runtime-dependency constraint, add `node:test` coverage for new behavior, and run
 `npm test` (clean build + all tests passing) before opening a PR.
 
