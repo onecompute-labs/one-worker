@@ -12,7 +12,7 @@ export * from "./worker.js";
 
 function banner(config: Config, key: WorkerKey): void {
   const shortId = key.workerId.length > 24 ? `${key.workerId.slice(0, 24)}…` : key.workerId;
-  console.log("ONE worker online — earn USDC from your idle GPU");
+  console.log("ONE worker online — earn USDT from your idle GPU");
   console.log(`  gateway : ${config.gateway}`);
   console.log(`  backend : ${config.backend}`);
   console.log(`  models  : ${config.models.join(", ")}`);
@@ -20,7 +20,7 @@ function banner(config: Config, key: WorkerKey): void {
   console.log(`  worker  : ${shortId}`);
   if (key.ephemeral) {
     console.warn(
-      "  ⚠ ONE_WORKER_KEY not set — using an ephemeral key; USDC payouts won't accrue across restarts.",
+      "  ⚠ ONE_WORKER_KEY not set — using an ephemeral key; USDT payouts won't accrue across restarts.",
     );
     console.warn(
       "    Generate a persistent key: openssl genpkey -algorithm ed25519 -out worker.key",
