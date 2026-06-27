@@ -52,8 +52,8 @@ USDT. There is no $ONE token in the loop on the worker side — the token gates 
 - **Node.js >= 20** (uses global `fetch`, `node:crypto`, `node:timers/promises`).
 - **A local OpenAI-compatible inference backend.** Any of these work out of the box:
   - [Ollama](https://ollama.com) — `http://localhost:11434/v1` (default)
-  - [llama.cpp](https://github.com/ggml-org/llama.cpp) server — `http://localhost:8080/v1`
-  - [vLLM](https://github.com/vllm-project/vllm) — `http://localhost:8000/v1`
+  - llama.cpp server — `http://localhost:8080/v1`
+  - vLLM — `http://localhost:8000/v1`
   - [LM Studio](https://lmstudio.ai) — `http://localhost:1234/v1`
 - An ed25519 key (the worker generates an ephemeral one if you don't supply one, but ephemeral
   keys do not accrue settlement).
