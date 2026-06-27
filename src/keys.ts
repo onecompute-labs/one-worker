@@ -73,7 +73,7 @@ export function generateKey(): WorkerKey {
 
 /**
  * Load a worker key from PEM if provided, otherwise generate an ephemeral one.
- * Ephemeral keys work for testing but do not accrue USDC across restarts, since
+ * Ephemeral keys work for testing but do not accrue USDT across restarts, since
  * the network pays the public key and a fresh key has no settlement history.
  */
 export function loadOrCreateKey(pem?: string): WorkerKey {
