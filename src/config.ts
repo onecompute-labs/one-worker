@@ -1,5 +1,5 @@
 /** Default gateway URL for the ONE network. */
-export const DEFAULT_GATEWAY = "https://platform.onecompute.xyz";
+export const DEFAULT_GATEWAY = "https://onecomputeai.xyz/platform";
 /** Default local OpenAI-compatible backend (Ollama). */
 export const DEFAULT_BACKEND = "http://localhost:11434/v1";
 /** Default model advertised when none is configured. */
