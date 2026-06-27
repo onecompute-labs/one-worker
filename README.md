@@ -1,16 +1,16 @@
 # @onecompute/worker
 
-**Earn USDC from your idle GPU.**
+**Earn USDT from your idle GPU.**
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D20-339933.svg)](https://nodejs.org)
 [![type](https://img.shields.io/badge/types-included-3178c6.svg)](#programmatic-use)
 [![runtime deps](https://img.shields.io/badge/runtime%20deps-0-success.svg)](#architecture)
 
-GPU worker client for **[ONE](https://onecompute.xyz)**, the decentralized AI compute network.
+GPU worker client for **[ONE](https://onecomputeai.xyz)**, the decentralized AI compute network.
 Point it at any local OpenAI-compatible inference server (Ollama, llama.cpp, vLLM, LM Studio)
 and it pulls jobs from the gateway, runs inference, and returns **ed25519-signed, hash-linked
-receipts**. Verified work settles in **USDC** — you never touch a token, hold a balance, or take
+receipts**. Verified work settles in **USDT** — you never touch a token, hold a balance, or take
 price exposure.
 
 ---
@@ -20,7 +20,7 @@ price exposure.
 A worker is a long-running process on a machine with a GPU. It advertises the models it can run,
 polls the ONE gateway for matching jobs, executes them against your local backend, and proves the
 work with a cryptographic receipt. The protocol verifies the receipt and pays your public key in
-USDC. There is no $ONE token in the loop on the worker side — the token gates *demand*; supply
+USDT. There is no $ONE token in the loop on the worker side — the token gates *demand*; supply
 (you) is paid in stablecoin.
 
 ## How it works
@@ -33,8 +33,8 @@ USDC. There is no $ONE token in the loop on the worker side — the token gates 
    outputDigest`, links it to the previous receipt's hash (`prev`), and signs it with your
    ed25519 key.
 4. **Settle** — `POST /jobs/:id/result` with the output, the signed receipt, and its link hash.
-   The protocol verifies the receipt with [OneVerify](https://docs.onecompute.xyz) and credits
-   USDC to your worker identity.
+   The protocol verifies the receipt with [OneVerify](https://onecomputeai.xyz/docs) and credits
+   USDT to your worker identity.
 
 ```
  ┌────────┐  GET /jobs/next   ┌─────────┐  POST /chat/completions  ┌──────────┐
@@ -43,7 +43,7 @@ USDC. There is no $ONE token in the loop on the worker side — the token gates 
  │        │                   │         │ ◀──── completion ─────── │ (Ollama) │
  │        │  POST /result     │         │                          └──────────┘
  │        │  {output,receipt} │         │
- │        │ ────────────────▶ │         │ ── verify receipt ──▶ settle USDC
+ │        │ ────────────────▶ │         │ ── verify receipt ──▶ settle USDT
  └────────┘                   └─────────┘
 ```
 
@@ -67,7 +67,7 @@ npm install -g @onecompute/worker
 ollama serve &
 ollama pull llama3.1:8b
 
-# 2. Generate a persistent worker identity (your USDC payout address):
+# 2. Generate a persistent worker identity (your USDT payout address):
 openssl genpkey -algorithm ed25519 -out worker.key
 
 # 3. Run the worker:
@@ -80,7 +80,7 @@ one-worker
 Or from a clone:
 
 ```bash
-git clone https://github.com/onecomputexyz/one-worker
+git clone https://github.com/onecompute-labs/one-worker
 cd one-worker
 npm install
 npm run build
@@ -98,10 +98,10 @@ All configuration is via environment variables. `loadConfig()` validates them an
 
 | Variable          | Default                             | Meaning                                                              |
 | ----------------- | ----------------------------------- | ------------------------------------------------------------------- |
-| `ONE_GATEWAY`     | `https://platform.onecompute.xyz`   | ONE gateway base URL (trailing slashes stripped).                   |
+| `ONE_GATEWAY`     | `https://onecomputeai.xyz/platform`   | ONE gateway base URL (trailing slashes stripped).                   |
 | `ONE_BACKEND`     | `http://localhost:11434/v1`         | Local OpenAI-compatible backend base URL.                           |
 | `ONE_MODELS`      | `llama3.1:8b`                       | Comma-separated models to advertise. Trimmed and de-duplicated. Must be non-empty. |
-| `ONE_WORKER_KEY`  | *(unset → ephemeral key)*           | ed25519 private key in PKCS#8 PEM. Your USDC payout identity.       |
+| `ONE_WORKER_KEY`  | *(unset → ephemeral key)*           | ed25519 private key in PKCS#8 PEM. Your USDT payout identity.       |
 | `ONE_POLL_MS`     | `2000`                              | Poll interval in ms. Integer, `>= 250`. Invalid values throw.       |
 
 ## Receipts
@@ -126,7 +126,7 @@ predecessor's link hash. That makes the receipts an **append-only, tamper-eviden
 insertion, deletion, or mutation breaks either a signature or a link, and `ReceiptChain.verify()`
 returns the index of the first bad receipt.
 
-This is exactly what [OneVerify](https://docs.onecompute.xyz) checks before settlement: it
+This is exactly what [OneVerify](https://onecomputeai.xyz/docs) checks before settlement: it
 reimports your `worker` public key, re-derives `requestHash`/`outputDigest` from the recorded job
 and output, validates the ed25519 signature, and walks the `prev` chain. Verified receipts settle;
 unverifiable ones are rejected and can trigger a slashing of your bond.
@@ -203,7 +203,7 @@ injected mock `fetch` — they never touch the network or a real backend.
 
 ## Security
 
-- **Treat `ONE_WORKER_KEY` like a wallet key.** It is your USDC payout identity. Keep it out of
+- **Treat `ONE_WORKER_KEY` like a wallet key.** It is your USDT payout identity. Keep it out of
   source control (`*.key` and `.env` are git-ignored), and prefer `ONE_WORKER_KEY="$(cat worker.key)"`
   or a secrets manager over inlining it.
 - **The private key never leaves the worker.** Only the public key (the worker id) and signatures
@@ -216,10 +216,10 @@ injected mock `fetch` — they never touch the network or a real backend.
 ## Contributing
 
 Issues and pull requests welcome at
-[github.com/onecomputexyz/one-worker](https://github.com/onecomputexyz/one-worker). Please keep the
+[github.com/onecompute-labs/one-worker](https://github.com/onecompute-labs/one-worker). Please keep the
 zero-runtime-dependency constraint, add `node:test` coverage for new behavior, and run
 `npm test` (clean build + all tests passing) before opening a PR.
 
 ## License
 
-MIT © 2026 ONE Protocol · [docs](https://docs.onecompute.xyz) · [site](https://onecompute.xyz)
+MIT © 2026 ONE Protocol · [docs](https://onecomputeai.xyz/docs) · [site](https://onecomputeai.xyz)
